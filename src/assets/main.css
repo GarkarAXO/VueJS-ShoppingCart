@@ -107,11 +107,12 @@ li input {
   background: #606f7b;
 }
 .btn-primary {
-  background: #20f793;
-  color: #FFFFFF;
+  background: #0db5d3;
+  color: #000000;
 }
 .btn-primary:hover {
   background: #F45050;
+  color: #ffffff;
 }
 .btn-cancel {
   background: #F45050;
