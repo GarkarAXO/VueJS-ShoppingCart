@@ -10,20 +10,27 @@ const saveItem = () => {
   items.value.push({ id: items.value.length + 1, label: newItem.value })
   //Limpiando el contenido de newItem
   newItem.value = ""; 
-}
+};
 const newItem = ref('');
 const newItemHighPriority = ref(false);
+const editing = ref(false);
+const doEdit = (edit) => {
+  //alteramos la variable esditing
+  editing.value = edit;
+  // limpiamos el input de texto
+  newItem.value = ""; 
+};
 </script>
 
 <template>
   <div class="header">
     <h1> <i class="material-icons shopping-cart-icon">local_mall</i> {{ header }}</h1>
-    <button v-if="form === true" class="btn">Cancelar</button>
-    <button v-else  class="btn btn-primary">Agregar Articulos</button>
+    <button v-if="!editing" @click="doEdit(true)" class="btn btn-primary">Agregar</button>
+    <button v-else @click="doEdit(false)" class="btn btn-cancel">Cancelar</button>
   </div>
-  <form v-on:submit.prevent= saveItem class="add-item form">
+  <form v-if="editing" v-on:submit.prevent= saveItem class="add-item form">
     <!-- Input de nuevo articulo -->
-    <input v-model.trim="newItem" type="text" placeholder="Ingresar articulo">
+    <input class="addint" v-model.trim="newItem" type="text" placeholder="Ingresar articulo">
     <!-- Check Boxes -->
     <label>
       <input v-model="newItemHighPriority" type="checkbox">
