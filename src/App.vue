@@ -20,6 +20,20 @@ const doEdit = (edit) => {
   // limpiamos el input de texto
   newItem.value = ""; 
 };
+const vacio = (vacioI) => {
+  
+};
+
+
+
+
+// function validate_send(){
+// if(document.comments.user.value == "") {
+// alert("Por favor indique Su Nombre");
+// document.comments.user.focus();
+// return false;
+// };
+
 </script>
 
 <template>
@@ -28,13 +42,15 @@ const doEdit = (edit) => {
     <button v-if="!editing" @click="doEdit(true)" class="btn btn-primary">Agregar</button>
     <button v-else @click="doEdit(false)" class="btn btn-cancel">Cancelar</button>
   </div>
+  <!-- <a v-bind:href="newItem">
+    <i class="material-icons shopping-cart-icon">link</i>
+  </a> -->
   <form v-if="editing" v-on:submit.prevent= saveItem class="add-item form">
     <!-- Input de nuevo articulo -->
     <input class="addint" v-model.trim="newItem" type="text" placeholder="Ingresar articulo">
     <!-- Check Boxes -->
     <label>
-      <input v-model="newItemHighPriority" type="checkbox">
-      Alta Prioridad
+      <input v-model="newItemHighPriority" type="checkbox"> Alta Prioridad
     </label>
     {{ newItemHighPriority ? "👍" : "👈" }}
     <!-- boton en la UI -->
@@ -52,5 +68,14 @@ const doEdit = (edit) => {
 <style>
 .shopping-cart-icon {
   font-size: 2rem;
+}
+.addint {
+  outline: none;
+  border-color: #26376b;
+  color: #3C486B;
+  height: 20px;
+  background-color: rgb(231, 231, 231);
+  border-radius: 8px;
+  border: 1px solid #3C486B;
 }
 </style>

@@ -138,11 +138,3 @@ input[type="checkbox"] {
   width: auto;
 }
 
-.addint {
-  border: 0;
-  border-color: #26376b;
-  color: #3C486B;
-  height: 20px;
-  border-radius: 5px;
-  background-color: rgb(231, 231, 231);
-}
