@@ -20,20 +20,6 @@ const doEdit = (edit) => {
   // limpiamos el input de texto
   newItem.value = ""; 
 };
-const vacio = (vacioI) => {
-  
-};
-
-
-
-
-// function validate_send(){
-// if(document.comments.user.value == "") {
-// alert("Por favor indique Su Nombre");
-// document.comments.user.focus();
-// return false;
-// };
-
 </script>
 
 <template>
@@ -47,7 +33,7 @@ const vacio = (vacioI) => {
   </a> -->
   <form v-if="editing" v-on:submit.prevent= saveItem class="add-item form">
     <!-- Input de nuevo articulo -->
-    <input class="addint" v-model.trim="newItem" type="text" placeholder="Ingresar articulo">
+    <input class="addint" v-model.trim="newItem" type="text" placeholder="Ingresar articulo" required>
     <!-- Check Boxes -->
     <label>
       <input v-model="newItemHighPriority" type="checkbox"> Alta Prioridad
