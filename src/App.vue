@@ -2,10 +2,15 @@
 import { ref } from 'vue';
 const header = ref('App Lista de compras');
 const items = ref([
-  // { id: 1, label: '10 bolillos' },
-  // { id: 2, label: '1 lata de frijoles' },
-  // { id: 3, label: '2 lata de atún' }
+  { id: 1, label: '10 bolillos', purchased: true, highPriority: false },
+  { id: 2, label: '1 lata de frijoles', purchased: false, highPriority: true },
+  { id: 3, label: '2 lata de atún', purchased: true, highPriority: true }
 ]);
+//funcion que alterna el estado de comprado de newItems
+const togglePurchased = (item) =>{
+  //invertir la propiedad toggle
+  item.purchased = !item.purchased;
+}
 const saveItem = () => {
   items.value.push({ id: items.value.length + 1, label: newItem.value })
   //Limpiando el contenido de newItem
@@ -33,22 +38,27 @@ const doEdit = (edit) => {
   </a> -->
   <form v-if="editing" v-on:submit.prevent= saveItem class="add-item form">
     <!-- Input de nuevo articulo -->
-    <input class="addint" v-model.trim="newItem" type="text" placeholder="Ingresar articulo" required>
+    <input class="addint" v-model.trim="newItem" type="text" placeholder="Ingresar articulo">
     <!-- Check Boxes -->
     <label>
       <input v-model="newItemHighPriority" type="checkbox"> Alta Prioridad
     </label>
     {{ newItemHighPriority ? "👍" : "👈" }}
     <!-- boton en la UI -->
-    <button class="btn btn-primary">Salvar articulo</button>
+    <button :disabled="newItem.length === 0" class="btn btn-primary">Salvar articulo</button>
   </form>
   <ul>
-    <li v-for="{ id, label } in items" v-bind:key="id">
+    <li v-for="({ id, label, purchased, highPriority }, index) in items" 
+    v-bind:key="id"
+    :class="{strikeout : purchased, priority: highPriority}"
+    @click="togglePurchased(items[index])"
+    >   
+     <!--otra forma es    :class="[purchased?'strikeout':'']" -->
       🔹 {{ label }}
     </li>
   </ul>
-  <p v-if ="items.length === 0">🥀 Lista de Compras Vacia 🥀</p>
-  <p v-else>😎 Ingrese más Items</p>
+  <p  v-if ="items.length === 0">🥀 Lista de Compras Vacia 🥀</p>
+  <p v-else >😎 Ingrese más Items</p>
 </template>
 
 <style>
