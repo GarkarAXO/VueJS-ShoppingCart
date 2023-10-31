@@ -1,5 +1,7 @@
 <script setup>
-import { ref } from 'vue';
+// This starter template is using Vue 3 <script setup> SFCs
+// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
+import { ref, computed } from 'vue';
 const header = ref('App Lista de compras');
 const items = ref([
   { id: 1, label: '10 bolillos', purchased: true, highPriority: false },
@@ -20,14 +22,21 @@ const newItem = ref('');
 const newItemHighPriority = ref(false);
 const editing = ref(false);
 const doEdit = (edit) => {
-  //alteramos la variable esditing
+  //alteramos la variable editing
   editing.value = edit;
   // limpiamos el input de texto
   newItem.value = ""; 
 };
+// Creando una propiedad computada
+const characterCount = computed(()=>{  // Toda propiedad computada debe regresar un valor
+  return newItem.value.length;
+});
+// Creando propiedad computada que invierte items de la lista
+const reversedItems = computed(() => [...items.value].reverse());
 </script>
 
 <template>
+
   <div class="header">
     <h1> <i class="material-icons shopping-cart-icon">local_mall</i> {{ header }}</h1>
     <button v-if="!editing" @click="doEdit(true)" class="btn btn-primary">Agregar</button>
@@ -46,12 +55,16 @@ const doEdit = (edit) => {
     {{ newItemHighPriority ? "👍" : "👈" }}
     <!-- boton en la UI -->
     <button :disabled="newItem.length === 0" class="btn btn-primary">Salvar articulo</button>
+    <!-- Contador -->
+    <p class="counter">
+    {{ characterCount }} / 200
+    </p>
   </form>
   <ul>
-    <li v-for="({ id, label, purchased, highPriority }, index) in items" 
+    <li v-for="({ id, label, purchased, highPriority }, index) in reversedItems" 
     v-bind:key="id"
     :class="{strikeout : purchased, priority: highPriority}"
-    @click="togglePurchased(items[index])"
+    @click="togglePurchased(reversedItems[index])"
     >   
      <!--otra forma es    :class="[purchased?'strikeout':'']" -->
       🔹 {{ label }}
